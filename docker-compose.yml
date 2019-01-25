@@ -2,13 +2,13 @@ version: '3'
 
 services:
   mysql:
-    image: mysql:5.5
+    image: mysql:5.6
     container_name: agence
     volumes:
       - container-volume:/var/lib/mysql
       - ./banco_de_dados.sql:/docker-entrypoint-initdb.d/banco_de_dados.sql
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: agence
       MYSQL_DATABASE: cao
     ports:
       - "3306:3306"
