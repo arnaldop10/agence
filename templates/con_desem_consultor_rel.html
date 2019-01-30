@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="section">
+        <h5>Relatorio</h5>
+        <p>Listado de Resultados</p>
+    </div>
+    {% include 'form.html' %}
+    
+    <div class="section">
+        <h5>Resultados</h5>
+    </div>
+    {% if ganancias %}
+      {% for item in ganancias %}
+      <div class="divider"></div>
+      <div class="row">
+        <div class="col s12">
+          <div class="card-panel teal lighten-2">
+            <strong>Consultor: {{ item.consultor }}</strong>
+          </div>
+        </div>
+        <div class="col s12">
+          <table class="highlight">
+            <thead>
+              <tr>
+                <th>Periodo</th>
+                <th>Receita Liquida</th>
+                <th>Custo Fixo</th>
+                <th>Comissao</th>
+                <th>Lucro</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for periodo in item.periodos %}
+                <tr>
+                  <td>{{ periodo.nombre }}</td>
+                  <td>{{ periodo.ganancia_liquida }}</td>
+                  <td>{{ periodo.costo_fijo }}</td>
+                  <td>{{ periodo.comision }}</td>
+                  <td>{{ periodo.lucro }}</td>
+                </tr>
+              {% endfor %}
+              <tr class="totales">
+                <td>SALDO</td>
+                <td>{{ item.totales.total_ganancias }}</td>
+                <td>{{ item.totales.total_costo }}</td>
+                <td>{{ item.totales.total_comision }}</td>
+                <td>{{ item.totales.total_lucro }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="divider"></div>
+      <div class="row">
+        <div class="col s12">
+          <div class="card-panel red lighten-1">
+            <strong>No existe datos para esta búsqueda. Intente nuevamente.</strong>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+{% endblock content %}
+
+{% block js %}
+{% endblock js %}

@@ -1158,6 +1158,12 @@ class CaoUsuario(models.Model):
         managed = False
         db_table = 'cao_usuario'
 
+    def get_list_users(self):
+        permisos = PermissaoSistema.objects.filter(
+            co_sistema=1, in_ativo='S', co_tipo_usuario__in=[0, 1, 2])
+
+        return self.objects.filter(co_usuario__in=permisos)
+
 
 class CaoUsuarioDtDisp(models.Model):
     co_dt_disp = models.AutoField(primary_key=True)

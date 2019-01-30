@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CAOL - Controle de Atividades Online{% endblock %}</title>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/agence.css' %}">
+</head>
+<body>
+        
+    {% block navbar %}
+        <ul id="dropdownComercial" class="dropdown-content">
+          <li><a href="{% url 'index' %}">Performance Comercial</a></li>
+        </ul>
+        <nav class="blue darken-4">
+            <div class="container">
+                <div class="nav-wrapper">
+                  <a href="{% url 'index' %}" class="brand-logo">
+                    <img src="{% static 'images/logo.png' %}" alt="Agence">
+                  </a>
+                  <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="#">Projetos</a></li>
+                    <li><a href="#">Administrativo</a></li>
+                    <li><a class="dropdown-trigger" href="#" data-target="dropdownComercial">Comercial<i class="material-icons right">arrow_drop_down</i></a></li>
+                    <li><a href="#">Financeiro</a></li>
+                    <li><a href="#">Usuário</a></li>
+                    <li><a href="#">Salir</a></li>
+                  </ul>
+                </div>
+            </div>
+        </nav>
+    {% endblock navbar %}
+
+    <div class="container">
+    {% block content %}{% endblock content %}
+    </div>
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.src.js"></script>
+    <script src="{% static 'js/agence.js' %}"></script>
+    {% block js %}
+    <script>
+        $(".dropdown-trigger").dropdown();
+    </script>
+    {% endblock js %}
+</body>
+</html>

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h4>Gráficos Pizza</h4>
+    <div class="divider"></div>
+    <br>
+    <div id="container"></div>
+{% endblock content %}
+
+{% block js %}
+    <script>
+        Highcharts.chart('container', {{chart_pizza|safe}} );
+    </script>
+{% endblock js %}
