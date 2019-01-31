@@ -21,7 +21,7 @@ def relatorio_detail_view(request):
         data = request.POST
         date_start = data.get('date_start')
         date_end = data.get('date_end')
-        consultores = data.getlist('consultores')
+        consultores = data.getlist('consultants')
         dates = get_periods_data(date_start, date_end)
         ganancias = []
 
@@ -101,7 +101,7 @@ def grafico_view(request):
         data = request.POST
         date_start = data.get('date_start')
         date_end = data.get('date_end')
-        consultores = data.getlist('consultores')
+        consultores = data.getlist('consultants')
         dates = get_periods_data(date_start, date_end)
         series = []
         periodos = []
@@ -112,14 +112,12 @@ def grafico_view(request):
         for consultor in consultores:
             usuario = CaoUsuario.objects.get(co_usuario=consultor)
             os = CaoOs.objects.filter(co_usuario=consultor)
+            salario = CaoSalario.objects.get(co_usuario=consultor)
+            costo_fijo += salario.brut_salario
             ganancias = []
             ganancias_netas = 0
+
             for date in dates:
-                try:
-                    salario = CaoSalario.objects.get(co_usuario=consultor)
-                    costo_fijo += salario.brut_salario
-                except CaoSalario.DoesNotExist:
-                    costo_fijo += 0
 
                 facturas = CaoFatura.objects.filter(
                     co_os__in=os,
@@ -135,13 +133,12 @@ def grafico_view(request):
                 periodos.append(get_string_month(
                     date['month']) + ' ' + str(date['year']))
 
-            costos.append(costo_fijo / num_consultores)
-
             series.append({
                 'name': usuario.no_usuario,
                 'data': ganancias,
             })
 
+        costos = [costo_fijo / num_consultores] * len(dates)
         series.append({
             'type': 'spline',
             'name': 'Costo Fijo Promedio',
@@ -177,7 +174,7 @@ def pizza_view(request):
         data = request.POST
         date_start = data.get('date_start')
         date_end = data.get('date_end')
-        consultores = data.getlist('consultores')
+        consultores = data.getlist('consultants')
         dates = get_periods_data(date_start, date_end)
         series = []
 
