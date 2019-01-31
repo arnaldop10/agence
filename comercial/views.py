@@ -8,11 +8,21 @@ from .utils import get_periods_data, get_string_month
 
 def index(request):
     """Vista principal para el index."""
+    consultores = []
     permisos = PermissaoSistema.objects.filter(
         co_sistema=1, in_ativo='S', co_tipo_usuario__in=[0, 1, 2]
     )
     usuarios = CaoUsuario.objects.filter(co_usuario__in=permisos)
-    return render(request, 'con_desempenho.html', {'usuarios': usuarios})
+    for usuario in usuarios:
+        consultores.append({
+            'co_usuario': usuario.co_usuario,
+            'no_usuario': (
+                usuario.no_usuario).encode("latin-1").decode("utf-8")
+        })
+    return render(
+        request,
+        'con_desempenho.html',
+        {'usuarios': consultores})
 
 
 def relatorio_detail_view(request):
@@ -73,7 +83,8 @@ def relatorio_detail_view(request):
                 })
 
             ganancias.append({
-                'consultor': usuario.no_usuario,
+                'consultor': (usuario.no_usuario).encode(
+                    "latin-1").decode("utf-8"),
                 'periodos': periodos,
                 'totales': {
                     'total_ganancias': round(total_ganancias, 2),
@@ -134,7 +145,7 @@ def grafico_view(request):
                     date['month']) + ' ' + str(date['year']))
 
             series.append({
-                'name': usuario.no_usuario,
+                'name': (usuario.no_usuario).encode("latin-1").decode("utf-8"),
                 'data': ganancias,
             })
 
@@ -194,7 +205,7 @@ def pizza_view(request):
                     ganancias_netas += round(valor_neto, 2)
 
             series.append({
-                'name': usuario.no_usuario,
+                'name': (usuario.no_usuario).encode("latin-1").decode("utf-8"),
                 'y': ganancias_netas,
             })
 
