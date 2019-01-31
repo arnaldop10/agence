@@ -24,6 +24,7 @@ class CaoOsAdmin(admin.ModelAdmin):
 class CaoSistemaAdmin(admin.ModelAdmin):
     list_display = ('co_sistema', 'no_sistema', 'ds_caracteristica')
 
+
 admin.site.register(models.CaoUsuario, CaoUsuarioAdmin)
 admin.site.register(models.PermissaoSistema, PermissaoSistemaAdmin)
 admin.site.register(models.CaoOs, CaoOsAdmin)
