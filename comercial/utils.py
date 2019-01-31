@@ -1,5 +1,6 @@
 from datetime import datetime
 from dateutil import relativedelta
+from .models import CaoUsuario, PermissaoSistema
 
 
 def get_periods_data(start, end):
@@ -60,3 +61,20 @@ def get_string_month(month):
     ]
 
     return months[month - 1]
+
+
+def get_consultants_list():
+    """Funcion que retorna la lista de consultores."""
+    consultants = []
+    permisos = PermissaoSistema.objects.filter(
+        co_sistema=1, in_ativo='S', co_tipo_usuario__in=[0, 1, 2]
+    )
+    usuarios = CaoUsuario.objects.filter(co_usuario__in=permisos)
+    for usuario in usuarios:
+        consultants.append({
+            'co_usuario': usuario.co_usuario,
+            'no_usuario': (
+                usuario.no_usuario).encode("latin-1").decode("utf-8")
+        })
+
+    return consultants

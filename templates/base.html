@@ -25,6 +25,7 @@
                   <a href="{% url 'index' %}" class="brand-logo">
                     <img src="{% static 'images/logo.png' %}" alt="Agence">
                   </a>
+                  <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                   <ul id="nav-mobile" class="right hide-on-med-and-down">
                     <li><a href="#">Projetos</a></li>
                     <li><a href="#">Administrativo</a></li>
@@ -36,6 +37,15 @@
                 </div>
             </div>
         </nav>
+
+        <ul class="sidenav" id="mobile-demo">
+          <li><a href="#">Projetos</a></li>
+          <li><a href="#">Administrativo</a></li>
+          <li><a class="dropdown-trigger" href="#" data-target="dropdownComercial">Comercial<i class="material-icons right">arrow_drop_down</i></a></li>
+          <li><a href="#">Financeiro</a></li>
+          <li><a href="#">Usuário</a></li>
+          <li><a href="#">Salir</a></li>
+        </ul>
     {% endblock navbar %}
 
     <div class="container">
@@ -47,10 +57,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.src.js"></script>
     <script src="{% static 'js/agence.js' %}"></script>
+
     {% block js %}
-    <script>
-        $(".dropdown-trigger").dropdown();
-    </script>
     {% endblock js %}
 </body>
 </html>

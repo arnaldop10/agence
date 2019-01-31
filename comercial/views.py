@@ -1,28 +1,17 @@
 import json
 from django.shortcuts import render
-from .models import (
-    CaoUsuario, PermissaoSistema, CaoOs, CaoFatura, CaoSalario)
+from .models import (CaoUsuario, CaoOs, CaoFatura, CaoSalario)
 # from django.http import HttpResponse
-from .utils import get_periods_data, get_string_month
+from .utils import get_periods_data, get_string_month, get_consultants_list
 
 
 def index(request):
     """Vista principal para el index."""
-    consultores = []
-    permisos = PermissaoSistema.objects.filter(
-        co_sistema=1, in_ativo='S', co_tipo_usuario__in=[0, 1, 2]
-    )
-    usuarios = CaoUsuario.objects.filter(co_usuario__in=permisos)
-    for usuario in usuarios:
-        consultores.append({
-            'co_usuario': usuario.co_usuario,
-            'no_usuario': (
-                usuario.no_usuario).encode("latin-1").decode("utf-8")
-        })
+    usuarios = get_consultants_list()
     return render(
         request,
         'con_desempenho.html',
-        {'usuarios': consultores})
+        {'usuarios': usuarios})
 
 
 def relatorio_detail_view(request):
@@ -94,10 +83,7 @@ def relatorio_detail_view(request):
                 }
             })
 
-    permisos = PermissaoSistema.objects.filter(
-        co_sistema=1, in_ativo='S', co_tipo_usuario__in=[0, 1, 2]
-    )
-    usuarios = CaoUsuario.objects.filter(co_usuario__in=permisos)
+    usuarios = get_consultants_list()
 
     return render(
         request,
