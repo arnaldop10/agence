@@ -109,8 +109,11 @@ def grafico_view(request):
         for consultor in consultores:
             usuario = CaoUsuario.objects.get(co_usuario=consultor)
             os = CaoOs.objects.filter(co_usuario=consultor)
-            salario = CaoSalario.objects.get(co_usuario=consultor)
-            costo_fijo += salario.brut_salario
+            try:
+                salario = CaoSalario.objects.get(co_usuario=consultor)
+                costo_fijo += salario.brut_salario
+            except CaoSalario.DoesNotExist:
+                costo_fijo += 0
             ganancias = []
             ganancias_netas = 0
 
@@ -124,9 +127,9 @@ def grafico_view(request):
                 for factura in facturas:
                     impuesto = factura.valor * (factura.total_imp_inc / 100)
                     valor_neto = factura.valor - impuesto
-                    ganancias_netas += round(valor_neto, 2)
+                    ganancias_netas += valor_neto
 
-                ganancias.append(ganancias_netas)
+                ganancias.append(round(ganancias_netas, 2))
                 periodos.append(get_string_month(
                     date['month']) + ' ' + str(date['year']))
 
