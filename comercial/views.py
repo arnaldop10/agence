@@ -138,7 +138,7 @@ def grafico_view(request):
                 'data': ganancias,
             })
 
-        costos = [costo_fijo / num_consultores] * len(dates)
+        costos = [round(costo_fijo / num_consultores, 2)] * len(dates)
         series.append({
             'type': 'spline',
             'name': 'Costo Fijo Promedio',
