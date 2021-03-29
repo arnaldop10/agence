@@ -12,7 +12,7 @@ gunicorn==19.9.0
 idna==2.8
 psycopg2==2.7.7
 psycopg2-binary==2.7.7
-Pygments==2.3.1
+Pygments==2.7.4
 python-dateutil==2.7.5
 python-decouple==3.1
 pytz==2018.9
